@@ -5,9 +5,10 @@ Restart : sudo systemctl restart mongod
 
 mongosh : debuter une session
 
+react :
+cd geo_master_client
+npm start
 
-
-react : 
-cd react-app
-  npm install
-  npm run dev
+lancer le server node :
+cd backend
+node server.js
