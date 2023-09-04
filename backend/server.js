@@ -2,7 +2,11 @@ const express = require("express");
 const { MongoClient } = require("mongodb");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { getAllCollections, getOneCollection } = require("./routes");
+const {
+  getAllCollections,
+  getOneCollection,
+  getAllDocuments,
+} = require("./routes");
 
 const app = express();
 
@@ -33,3 +37,4 @@ const mongoClient = new MongoClient(mongo_uri, {
 
 app.get("/all_collections", getAllCollections);
 app.get("/one_collection", getOneCollection);
+app.get("/getAllDocuments", getAllDocuments);

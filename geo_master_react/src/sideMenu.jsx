@@ -28,6 +28,7 @@ const SideMenu = () => {
 
   return (
     <div>
+      <p>Ouvrir 94 hydrographie pour les test</p>
       <ul>
         {categ.map((category, index) => (
           <li key={index} id={category}>
@@ -38,7 +39,7 @@ const SideMenu = () => {
       {data ? (
         <ul>
           {data.map((element, index) => (
-            <li key={index} id={element}>
+            <li key={index} id={element.match(/dep_(\d+)/)[0]}>
               {element
                 .match(/dep_(\d+)/)[0]
                 .replace("dep", "Departement")

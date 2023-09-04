@@ -14,8 +14,24 @@ const getOneCollection = async (req, res) => {
 
   const documents = await collection.find({}).toArray();
 
-  // Respond with the documents or perform other operations as needed
   res.status(200).json({ documents });
 };
 
-module.exports = { getAllCollections, getOneCollection };
+const getAllDocuments = async (req, res) => {
+  const db = req.app.locals.mongoClient.db();
+  const collections = await db.listCollections().toArray();
+  var output = [];
+  for (let col of collections) {
+    const collection = db.collection(col.name);
+
+    let documents = await collection.find({}).toArray();
+
+    if (Array.from(documents).length != 0) {
+      output.push(documents);
+    }
+  }
+
+  res.status(200).json({ output });
+};
+
+module.exports = { getAllCollections, getOneCollection, getAllDocuments };
