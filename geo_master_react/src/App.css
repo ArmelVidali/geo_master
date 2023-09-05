@@ -109,6 +109,10 @@ input:focus {
   margin-top: 10vh;
 }
 
+.hidden-DataFrame {
+  display: none;
+}
+
 .GeoEntity {
   border-bottom: solid white 1px;
   justify-content: center;
@@ -257,7 +261,7 @@ nav a:nth-child(3):hover ~ #indicator {
 .hidden-mapContainer {
   display: none;
 }
-.mapContainer {
+.mapContainer > * {
   position: absolute;
   bottom: 0;
   right: 0;

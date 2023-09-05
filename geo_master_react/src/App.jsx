@@ -24,7 +24,7 @@ function App() {
       <DataFrame
         selectedCategory={selectedCategory}
         selectedDepartment={selectedDepartment}
-        setView={view}
+        view={view}
       />
     </>
   );

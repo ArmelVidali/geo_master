@@ -3,7 +3,7 @@ import { RingLoader } from "react-spinners";
 
 const DataFrame = (props) => {
   const [data, setData] = useState(null);
-  var { selectedCategory, selectedDepartment } = props;
+  var { selectedCategory, selectedDepartment, view } = props;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const DataFrame = (props) => {
   }, [selectedDepartment, selectedCategory]);
 
   return (
-    <div className="DataFrame">
+    <div className={view == "data" ? "DataFrame" : "hidden-DataFrame"}>
       {loading ? (
         <div className="spinner-container">
           <RingLoader size={100} color={"white"} loading={loading} />
