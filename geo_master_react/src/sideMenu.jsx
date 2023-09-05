@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-const SideMenu = () => {
+const SideMenu = ({ onCategoryClick, onDepartmentClick }) => {
   const [data, setData] = useState(null);
-  var categ = [
+  const categ = [
     "administratif",
     "adresses",
     "bati",
@@ -19,31 +19,42 @@ const SideMenu = () => {
       const res = await fetch("http://localhost:3001/all_collections");
       if (res.ok) {
         const json = await res.json();
-        setData(json.collections); // Store the data in state
+        setData(json); // Store the data in state
       }
     };
 
     fetchAll();
   }, []);
 
+  // Set a list with all categories and a sublist with all departements, trimmed to remove the suffix (Bati, Adresse...)
   return (
-    <div>
-      <p>Ouvrir 94 hydrographie pour les test</p>
-      <ul>
+    <div className="SideMenu">
+      <input type="text" />
+      <p>Catégorie</p>
+      <ul className="CategList">
         {categ.map((category, index) => (
-          <li key={index} id={category}>
-            {category}
+          <li
+            key={index}
+            id={category}
+            className="FilterLi"
+            onClick={() => onCategoryClick(category)}
+          >
+            {category.replace("_", " ").charAt(0).toUpperCase() +
+              category.replace("_", " ").slice(1)}
           </li>
         ))}
       </ul>
+      <p>Emprise géographique</p>
       {data ? (
-        <ul>
+        <ul className="DepartementList">
           {data.map((element, index) => (
-            <li key={index} id={element.match(/dep_(\d+)/)[0]}>
-              {element
-                .match(/dep_(\d+)/)[0]
-                .replace("dep", "Departement")
-                .replace("_", " ")}
+            <li
+              key={index}
+              id={element}
+              className="FilterLi"
+              onClick={() => onDepartmentClick(element)}
+            >
+              {element.replace("dep", "Departement").replace("_", " ")}
             </li>
           ))}
         </ul>

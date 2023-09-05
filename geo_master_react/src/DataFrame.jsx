@@ -1,68 +1,66 @@
 import { useEffect, useState } from "react";
+import { RingLoader } from "react-spinners";
 
-const DataFrame = () => {
+const DataFrame = (props) => {
   const [data, setData] = useState(null);
+  var { selectedCategory, selectedDepartment } = props;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     const fetchAll = async () => {
-      const res = await fetch("http://localhost:3001/getAllDocuments");
+      const res = await fetch(
+        `http://localhost:3001/one_collection?collectionName=${selectedDepartment}&category=${selectedCategory}`
+      );
+      console.log(
+        `http://localhost:3001/one_collection?collectionName=${selectedDepartment}&category=${selectedCategory}`
+      );
       if (res.ok) {
         const json = await res.json();
-        console.log(json.output);
+        console.log(json);
         setData(json.output); // Store the data in state
+        setLoading(false);
       }
     };
 
     fetchAll();
-  }, []);
+  }, [selectedDepartment, selectedCategory]);
 
   return (
-    <div>
-      {data &&
+    <div className="DataFrame">
+      {loading ? (
+        <div className="spinner-container">
+          <RingLoader size={100} color={"white"} loading={loading} />
+        </div>
+      ) : (
         data.map((list, listIndex) => {
           return (
-            <div key={listIndex}>
+            <table key={listIndex}>
               {list.map((item, itemIndex) => (
                 <div>
                   {/* entity group name, ie : france*/}
-                  {item.name}
+                  <p className="EntityName">{item.name}</p>
                   {/* entity group */}
-                  <ul key={itemIndex} className="GeoEntityGroup">
+                  <tr key={itemIndex} className="GeoEntityGroup">
                     {item.features.map((entity, entityIndex) => (
                       /* value key/pair values for each entity */
-                      <ul key={entityIndex}>
+                      <tr key={entityIndex} className="GeoEntity">
                         {Object.entries(entity.properties).map(
                           ([key, value]) => (
                             <li key={key}>{key + " : " + value}</li>
                           )
                         )}
-                      </ul>
+                      </tr>
                     ))}
-                  </ul>
+                  </tr>
                 </div>
               ))}
-            </div>
+            </table>
           );
-        })}
+        })
+      )}
     </div>
   );
 };
 
 export default DataFrame;
-
-/* <li key={itemIndex}>
-                  <span>{"Name : " + item.name}</span>
-                  <br />
-                  <span>
-                    {item.crs.properties.name
-                      .substring(item.crs.properties.name.indexOf("EPSG"))
-                      .replace("::", " : ")}
-                  </span>
-                  <br />
-                  <span>{"Features : " + item.features.length}</span>
-                  <ul>
-                    {Object.entries(item.features).map(([key, value]) => (
-                      <li key={key}>{key + value}</li>
-                    ))}
-                  </ul>
-                </li> */
