@@ -12,6 +12,7 @@ body {
   height: 100vh;
 }
 
+/* Menu */
 .SideMenu {
   display: flex;
   flex-direction: column;
@@ -19,11 +20,8 @@ body {
   left: 0;
   top: 0;
   width: 15vw;
-  height: 99vh;
-  border: solid white 3px;
-  border-radius: 0px 8px 8px 0px;
+  height: 100vh;
   background-color: #083346;
-  margin-bottom: 10px;
 }
 
 .DepartementList {
@@ -33,7 +31,7 @@ body {
   max-height: 10vw;
   overflow-y: auto;
   overflow-x: hidden;
-  border-bottom: 0.2em solid #fafafa;
+
   margin: 1;
 }
 
@@ -94,7 +92,9 @@ input {
 input:focus {
   outline: solid rgb(249, 249, 249) 1px;
 }
+/* End Menu */
 
+/* Central data frame */
 .DataFrame {
   display: flex;
   flex-direction: column;
@@ -105,6 +105,7 @@ input:focus {
   border-radius: 8px;
   max-height: 100vh;
   height: 89vh;
+
   overflow-y: auto;
   margin-top: 10vh;
 }
@@ -113,25 +114,41 @@ input:focus {
   display: none;
 }
 
-.GeoEntity {
-  border-bottom: solid white 1px;
+/* DataFrame cells */
+
+.DataFrame > table:nth-child(1) > thead:nth-child(1) > tr:nth-child(1) {
+  height: fit-content;
+  background-color: #001e2b;
+  display: flex;
   justify-content: center;
-  border-radius: 16px;
-  padding: 10px;
-  margin: 10px;
 }
 
 tr {
-  width: 83vw;
-}
-
-.GeoEntityGroup {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100vw;
+  align-items: flex-start;
 }
 
-.GeoEntityGroup tr:nth-child(odd) {
-  background-color: #1f4758;
+.TrDetails {
+  margin-left: 5vw;
+}
+
+.SelectIcon {
+  position: absolute;
+  right: 1px;
+  height: 2.5vh;
+  color: red;
+  padding-right: 1vw;
+}
+
+.ItemName {
+  font-weight: 600;
+  padding: 1vh;
+}
+
+tr:nth-child(odd) {
+  background-color: #224a65;
 }
 
 .EntityName {
@@ -145,6 +162,17 @@ tr {
 
   justify-content: center;
 }
+
+.NoData {
+  display: flex;
+  align-self: center;
+  width: 50vw;
+  height: 100vh;
+}
+
+/* tooltip */
+
+/* tooltip end */
 
 /* NavBar */
 

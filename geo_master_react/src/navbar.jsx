@@ -3,7 +3,7 @@ import download_png from "/home/geo/Desktop/geo_master/geo_master_react/src/asse
 
 const Navbar = (prop) => {
   const setView = prop.setView;
-  const [indicatorPosition, setIndicatorPosition] = useState(1);
+  const [indicatorPosition, setIndicatorPosition] = useState(2);
 
   const handleNavLinkClick = (index) => {
     setIndicatorPosition(index);

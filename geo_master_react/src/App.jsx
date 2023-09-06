@@ -11,7 +11,23 @@ function App() {
   const [count, setCount] = useState(0);
   var [selectedCategory, setselectedCategory] = useState(null);
   var [selectedDepartment, setselectedDepartment] = useState(null);
+  var [selectedEntities, setselectedEntities] = useState([]);
   var [view, setView] = useState("map");
+
+  const handleselectedEntities = (item_id) => {
+    // Create a new array based on the current state
+    if (selectedEntities.includes(item_id)) {
+      setselectedEntities((selectedEntities) =>
+        selectedEntities.filter((item) => item != item_id)
+      );
+    } else {
+      console.log("check false");
+      setselectedEntities((selectedEntities) => [...selectedEntities, item_id]);
+    }
+  };
+  useEffect(() => {
+    console.log(selectedEntities);
+  }, [selectedEntities]); // This useEffect will run after the state update
 
   return (
     <>
@@ -20,11 +36,12 @@ function App() {
         onDepartmentClick={setselectedDepartment}
       />
       <NavBar setView={setView} />
-      <Lmap view={view} />
+      <Lmap view={view} selectedEntities={selectedEntities} />
       <DataFrame
         selectedCategory={selectedCategory}
         selectedDepartment={selectedDepartment}
         view={view}
+        setselectedEntities={handleselectedEntities}
       />
     </>
   );
