@@ -5,9 +5,14 @@ import selectIcon from "./assets/select-icon.svg";
 import selectedIcon from "./assets/selected-icon.svg";
 
 const DataFrame = (props) => {
-  const [data, setData] = useState(null);
-  const { selectedCategory, selectedDepartment, view, setselectedEntities } =
-    props;
+  const {
+    selectedCategory,
+    selectedDepartment,
+    view,
+    setselectedEntities,
+    data,
+    setData,
+  } = props;
   const [loading, setLoading] = useState(true);
   const [selected_icon, setSelectedIcon] = useState([]); // Initialize as an empty array
 
@@ -24,18 +29,25 @@ const DataFrame = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    const fetchAll = async () => {
-      const res = await fetch(
-        `http://localhost:3001/one_collection?collectionName=${selectedDepartment}&category=${selectedCategory}`
-      );
-      if (res.ok) {
-        const json = await res.json();
-        setData(json.output);
+
+    const fetchData = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:3001/one_collection?collectionName=${selectedDepartment}&category=${selectedCategory}`
+        );
+
+        if (res.ok) {
+          const json = await res.json();
+          setData(json.output);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
         setLoading(false);
       }
     };
 
-    fetchAll();
+    fetchData();
   }, [selectedDepartment, selectedCategory]);
 
   return (

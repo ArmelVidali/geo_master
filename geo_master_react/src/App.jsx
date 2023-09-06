@@ -13,6 +13,7 @@ function App() {
   var [selectedDepartment, setselectedDepartment] = useState(null);
   var [selectedEntities, setselectedEntities] = useState([]);
   var [view, setView] = useState("map");
+  const [data, setData] = useState(null);
 
   const handleselectedEntities = (item_id) => {
     // Create a new array based on the current state
@@ -25,9 +26,6 @@ function App() {
       setselectedEntities((selectedEntities) => [...selectedEntities, item_id]);
     }
   };
-  useEffect(() => {
-    console.log(selectedEntities);
-  }, [selectedEntities]); // This useEffect will run after the state update
 
   return (
     <>
@@ -36,12 +34,14 @@ function App() {
         onDepartmentClick={setselectedDepartment}
       />
       <NavBar setView={setView} />
-      <Lmap view={view} selectedEntities={selectedEntities} />
+      <Lmap view={view} selectedEntities={selectedEntities} data={data} />
       <DataFrame
         selectedCategory={selectedCategory}
         selectedDepartment={selectedDepartment}
         view={view}
         setselectedEntities={handleselectedEntities}
+        data={data}
+        setData={setData}
       />
     </>
   );
