@@ -80,12 +80,7 @@ const DataFrame = (props) => {
                       alt="Select Icon"
                     ></img>
                   </td>
-                  <td className="TrDetails">
-                    {"Projection : " +
-                      item.crs.properties.name
-                        .match(/EPSG::(\d+)/)[0]
-                        .replace("::", ":")}
-                  </td>
+
                   <td className="TrDetails">
                     {"Nombre d'entités : " + item.features.length}
                   </td>

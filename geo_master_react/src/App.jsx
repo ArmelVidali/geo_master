@@ -13,7 +13,7 @@ function App() {
   var [selectedDepartment, setselectedDepartment] = useState(null);
   var [selectedEntities, setselectedEntities] = useState([]);
   var [view, setView] = useState("map");
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   const handleselectedEntities = (item_id) => {
     // Create a new array based on the current state
@@ -22,7 +22,6 @@ function App() {
         selectedEntities.filter((item) => item != item_id)
       );
     } else {
-      console.log("check false");
       setselectedEntities((selectedEntities) => [...selectedEntities, item_id]);
     }
   };

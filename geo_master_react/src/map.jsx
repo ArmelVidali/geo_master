@@ -1,36 +1,56 @@
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Polygon } from "react-leaflet";
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, GeoJSON, LayersControl } from "react-leaflet";
 
 const Lmap = (props) => {
   const view = props.view;
   const selectedEntities = props.selectedEntities;
-  const data = props.data;
+  var data = props.data;
 
-  // Create an array to store the Polygon components
-  const polygonComponents = [];
+  // Create a state variable to store the filtered data
+  const [filteredData, setFilteredData] = useState([]);
 
-  selectedEntities.forEach((entity_id) => {
-    data.forEach((nested_array) => {
-      console.log(nested_array);
-      nested_array.forEach((inner_array) => {
-        inner_array.features.forEach((feature) => {
-          if (feature.geometry.type === "Polygon") {
-            polygonComponents.push(
-              <Polygon positions={feature.geometry.coordinates} />
-            );
-          }
-        });
-      });
-    });
-  });
+  // Use useEffect to filter the data whenever selectedEntities or data change
+  useEffect(() => {
+    // Check if data is not null before filtering
+    if (data) {
+      // Filter the data to only display the selected entities
+      data = [].concat(...data);
+      const entities_to_render = data.filter((entity) =>
+        selectedEntities.includes(entity._id)
+      );
+
+      // Update the filteredData state with the filtered data
+      setFilteredData(entities_to_render);
+    }
+  }, [data, selectedEntities]);
 
   return (
     <div className={view === "map" ? "mapContainer" : "hidden-mapContainer"}>
       <MapContainer center={[48.8566, 2.3522]} zoom={13}>
-        <polygonComponents />
-        <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {/* Use filteredData to render GeoJSON components */}
+        <LayersControl>
+          {filteredData.map((entity, index) => (
+            <LayersControl.Overlay name={entity.name}>
+              <GeoJSON
+                data={entity}
+                key={index}
+                pathOptions={{
+                  fillColor: () => {
+                    const letters = "0123456789ABCDEF";
+                    let color = "#";
+                    for (let i = 0; i < 6; i++) {
+                      color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                  },
+                }}
+              ></GeoJSON>
+            </LayersControl.Overlay>
+          ))}
+        </LayersControl>
 
-        {/* Render the Polygon components outside of the loop */}
+        <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </MapContainer>
     </div>
   );
