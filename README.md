@@ -1,4 +1,5 @@
-# geo_master
+# Geo master 
+
 A React web client to connect to Mongo DB to fetch geographical data and display them as tabular or on a map.
 Made as a side project for my master degree, aiming to provide common data on a client and visualise them before downloading them.
 
