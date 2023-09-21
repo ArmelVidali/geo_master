@@ -34,7 +34,7 @@ const SideMenu = ({
   // Set a list with all categories and a sublist with all departements, trimmed to remove the suffix (Bati, Adresse...)
   return (
     <div className="SideMenu">
-      <input type="text" />
+      {/* <input type="text" />  set it again later*/}
       <p>Catégorie</p>
       <ul className="CategList">
         {categ.map((category, index) => (

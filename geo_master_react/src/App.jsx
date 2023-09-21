@@ -40,7 +40,11 @@ function App() {
         selectedDepartment={selectedDepartment}
         selectedCategory={selectedCategory}
       />
-      <NavBar setView={setView} />
+      <NavBar
+        setView={setView}
+        selectedEntities={selectedEntities}
+        data={data}
+      />
       <Lmap view={view} selectedEntities={selectedEntities} data={data} />
       <DataFrame
         selectedCategory={selectedCategory}
