@@ -9,12 +9,18 @@ import Lmap from "./map";
 
 function App() {
   const [count, setCount] = useState(0);
-  var [selectedCategory, setselectedCategory] = useState(null);
-  var [selectedDepartment, setselectedDepartment] = useState(null);
+  var [selectedCategory, setselectedCategory] = useState([]);
+  var [selectedDepartment, setselectedDepartment] = useState([]);
   var [selectedEntities, setselectedEntities] = useState([]);
   var [view, setView] = useState("map");
   const [data, setData] = useState([]);
 
+  useEffect(
+    (selectedDepartment) => {
+      console.log(selectedDepartment);
+    },
+    [selectedDepartment]
+  );
   const handleselectedEntities = (item_id) => {
     // Create a new array based on the current state
     if (selectedEntities.includes(item_id)) {
@@ -31,6 +37,8 @@ function App() {
       <SideMenu
         onCategoryClick={setselectedCategory}
         onDepartmentClick={setselectedDepartment}
+        selectedDepartment={selectedDepartment}
+        selectedCategory={selectedCategory}
       />
       <NavBar setView={setView} />
       <Lmap view={view} selectedEntities={selectedEntities} data={data} />

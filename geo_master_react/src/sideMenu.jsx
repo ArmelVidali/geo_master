@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 
-const SideMenu = ({ onCategoryClick, onDepartmentClick }) => {
+const SideMenu = ({
+  onCategoryClick,
+  onDepartmentClick,
+  selectedDepartment,
+  selectedCategory,
+}) => {
   const [data, setData] = useState(null);
   const categ = [
     "administratif",
@@ -36,7 +41,11 @@ const SideMenu = ({ onCategoryClick, onDepartmentClick }) => {
           <li
             key={index}
             id={category}
-            className="FilterLi"
+            className={
+              selectedCategory.includes(category)
+                ? "clicked-FilterLi"
+                : "FilterLi"
+            }
             onClick={() => onCategoryClick(category)}
           >
             {category.replace("_", " ").charAt(0).toUpperCase() +
@@ -51,8 +60,14 @@ const SideMenu = ({ onCategoryClick, onDepartmentClick }) => {
             <li
               key={index}
               id={element}
-              className="FilterLi"
-              onClick={() => onDepartmentClick(element)}
+              className={
+                selectedDepartment.includes(element)
+                  ? "clicked-FilterLi"
+                  : "FilterLi"
+              }
+              onClick={() => {
+                onDepartmentClick(element);
+              }}
             >
               {element.replace("dep", "Departement").replace("_", " ")}
             </li>
